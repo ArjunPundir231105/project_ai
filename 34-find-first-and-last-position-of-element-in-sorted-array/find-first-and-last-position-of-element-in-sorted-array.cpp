@@ -11,10 +11,10 @@ public:
         else low=mid+1;
      }  
 
-     int first = high + 1;
+    int first = high + 1;
+    if (first >= nums.size() || nums[first] != target) return {-1, -1};
 
-if (first >= nums.size() || nums[first] != target)
-    return {-1, -1};
+
      result.push_back(high+1);
 
      low = 0;
