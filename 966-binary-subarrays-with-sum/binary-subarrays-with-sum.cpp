@@ -4,10 +4,9 @@ public:
         if(goal<0) return 0;
         int l = 0;
         int r = 0;
-        int n = nums.size();
         long long sum=0;
         long long count=0;
-        while(r<n){
+        while(r<nums.size()){
             sum+=nums[r];
             while(sum>goal){
                 sum=sum-nums[l];
