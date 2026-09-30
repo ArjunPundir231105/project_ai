@@ -15,7 +15,7 @@ public:
                 if (freq[card] == 0) return false;
                 freq[card]--;
                 if (freq[card] == 0) {
-                    if (card != minHeap.top()) return false;
+                    //if (card != minHeap.top()) return false;
                     minHeap.pop();
                 }
             }
