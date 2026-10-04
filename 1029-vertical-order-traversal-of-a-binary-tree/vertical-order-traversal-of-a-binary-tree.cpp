@@ -1,34 +1,37 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-    map<int, vector<pair<int,int>>> mp;
-
-    void dfs(TreeNode* root, int row, int col) {
-        if(!root) return;
-
-        mp[col].push_back({row, root->val});
-
-        dfs(root->left, row + 1, col - 1);
-        dfs(root->right, row + 1, col + 1);
-    }
-
     vector<vector<int>> verticalTraversal(TreeNode* root) {
-        vector<vector<int>> ans;
+        map<int, vector<pair<int,int>>> mp;
+        queue<pair<TreeNode*, pair<int,int>>> q;
+        q.push({root,{0,0}});
+        while(!q.empty()){
+            auto [current,index] = q.front();
+            q.pop();
 
-        dfs(root, 0, 0);
+            auto [x,y] = index;
+            mp[y].push_back({x,current->val});
 
-        for(auto &it : mp) {
-            vector<int> temp;
-
-            // Sort by row, then by value
-            sort(it.second.begin(), it.second.end());
-
-            for(auto &p : it.second) {
-                temp.push_back(p.second);
-            }
-
-            ans.push_back(temp);
+            if(current->left) q.push({current->left,{x+1,y-1}});
+            if(current->right) q.push({current->right,{x+1,y+1}});
         }
-
-        return ans;
+        vector<vector<int>> result;
+        for(auto [col,item]:mp){
+         vector<int>ans;
+         sort(item.begin(),item.end());
+         for(auto [row,val]:item) ans.push_back(val);
+         result.push_back(ans);
+        }
+        return result;
     }
 };
