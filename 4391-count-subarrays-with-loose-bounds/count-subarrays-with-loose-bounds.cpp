@@ -1,17 +1,15 @@
 class Solution {
 public:
     long long countSubarrays(vector<int>& nums, int minK, int maxK) {
-        long long total_subarrays = 0;
-        long long current_valid_length = 0;
-        
-        for (int i = 0; i < nums.size(); ++i) {
-            if (nums[i] >= minK && nums[i] <= maxK) {
-                current_valid_length++;
-                total_subarrays += current_valid_length;
+        int left = 0;
+        int n = nums.size();
+        long long count =0;
+        for(int right = 0;right<n;right++){
+            if(nums[right] > maxK || nums[right] < minK){
+                left = right+1;
             }
-            else current_valid_length = 0; 
+            count += right-left+1;
         }
-        
-        return total_subarrays;
+        return count;
     }
 };
