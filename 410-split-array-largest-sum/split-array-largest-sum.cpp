@@ -3,7 +3,6 @@ public:
     bool canSplit(vector<int>&vec,int k,int mid){
         int sum=0;
         int count=1;
-        bool ans=false;
         for(int i=0;i<vec.size();i++){
         sum+=vec[i];
         if(sum>mid) {
