@@ -1,25 +1,26 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        int l=0;
-        int r=0;
-        int ans=0;
-        int n = s.length();
-        unordered_map<char,int>mp;
-        int z=0;
-        int cnt=0;
-        while(r<n){
-           cnt++;
-           mp[s[r]]++;
-           z=max(z,mp[s[r]]);
-           while(cnt-z>k){
-            mp[s[l]]--;
-            cnt--;
-            l++;
-           }
-           ans=max(ans,r-l+1);
-           r++;
+        unordered_map<char, int> mp;
+
+        int left = 0;
+        int ans = 0;
+        int maxFreq = 0;
+
+        for(int right = 0; right < s.length(); right++) {
+
+            mp[s[right]]++;
+
+            maxFreq = max(maxFreq, mp[s[right]]);
+
+            while((right - left + 1) - maxFreq > k) {
+                mp[s[left]]--;
+                left++;
+            }
+
+            ans = max(ans, right - left + 1);
         }
+
         return ans;
     }
 };
