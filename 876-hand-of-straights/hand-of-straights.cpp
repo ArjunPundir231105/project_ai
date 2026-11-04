@@ -1,25 +1,37 @@
 class Solution {
 public:
-    bool isNStraightHand(vector<int>& hand, int W) {
-        if (hand.size() % W != 0) return false;
-        unordered_map<int, int> freq;
-        priority_queue<int, vector<int>, greater<int>> minHeap;
-        for (int card : hand) {
-            if (freq[card] == 0) minHeap.push(card);
-            freq[card]++;
+    bool isNStraightHand(vector<int>& hand, int groupSize) {
+
+        if (hand.size() % groupSize != 0)
+            return false;
+
+        map<int, int> mp;
+
+        // Store frequency of each card
+        for (int x : hand) {
+            mp[x]++;
         }
-        while (!minHeap.empty()) {
-            int start = minHeap.top();
-            for (int i = 0; i < W; i++) {
-                int card = start + i;
-                if (freq[card] == 0) return false;
-                freq[card]--;
-                if (freq[card] == 0) {
-                    //if (card != minHeap.top()) return false;
-                    minHeap.pop();
+
+        while (!mp.empty()) {
+
+            int start = mp.begin()->first;
+
+            // Form a consecutive group
+            for (int i = 0; i < groupSize; i++) {
+
+                int curr = start + i;
+
+                if (mp.find(curr) == mp.end())
+                    return false;
+
+                mp[curr]--;
+
+                if (mp[curr] == 0) {
+                    mp.erase(curr);
                 }
             }
         }
+
         return true;
     }
 };
